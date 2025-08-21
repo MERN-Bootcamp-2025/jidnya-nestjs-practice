@@ -24,9 +24,9 @@ export class AuthService {
     const payload = { sub: user.id, email: user.email };
     const access_token = await this.jwt.signAsync(payload);
 
-    // destructuringonly what you need
+    // destructuringonly what needed
     const { passwordHash, ...safe } = user;
-    void passwordHash; // explicitly tell TS "I’m ignoring this"
+    void passwordHash;
 
     return { access_token, user: safe };
   }
