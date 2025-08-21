@@ -2,6 +2,7 @@
 import { NestFactory } from '@nestjs/core';
 import { AppModule } from './app.module';
 import { ValidationPipe } from '@nestjs/common';
+import { DocumentBuilder, SwaggerModule } from '@nestjs/swagger';
 
 async function bootstrap() {
   const app = await NestFactory.create(AppModule); //AppModule is the root container, important line
@@ -15,8 +16,15 @@ async function bootstrap() {
     }),
   );
   await app.listen(process.env.PORT ?? 3000);
+  const config = new DocumentBuilder()
+    .setTitle('API Lab')
+    .setDescription('Practice CRUD API with NestJS')
+    .setVersion('1.0')
+    .build();
+
+  const document = SwaggerModule.createDocument(app, config);
+  SwaggerModule.setup('docs', app, document);
 }
 bootstrap();
-
 //points to remember
 //pipe in nestjs is a class.
